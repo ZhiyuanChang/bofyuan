@@ -1,6 +1,11 @@
 package game
 
-import "regexp"
+import (
+	"bofyuan/src/csvs"
+	"fmt"
+	"regexp"
+	"time"
+)
 
 var manageBanWord *ManageBanWord
 
@@ -33,4 +38,20 @@ func GetManageBanWord() *ManageBanWord {
 }
 func NewManageBanWord() *ManageBanWord {
 	return &ManageBanWord{}
+}
+
+func (self *ManageBanWord) Run() {
+	self.BanWordBase = csvs.GetBaseBanWord()
+	ticker := time.NewTicker(time.Second)
+	for {
+		select {
+		case <-ticker.C:
+			if time.Now().Unix()%10 == 0 {
+				fmt.Println("更新词库")
+			} else {
+
+			}
+			fmt.Println("等待")
+		}
+	}
 }

@@ -10,6 +10,7 @@ func NewTestPlayer() *Player {
 	player := new(Player)
 	player.ModPlayer = new(ModPlayer)
 	player.ModIcon = new(ModIcon)
+	player.ModPlayer.Name = "goudan"
 	//********************
 	player.ModPlayer.Icon = 0
 	//************************
