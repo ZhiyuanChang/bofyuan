@@ -1,6 +1,9 @@
 package game
 
-import "fmt"
+import (
+	"bofyuan/src/csvs"
+	"fmt"
+)
 
 type ModPlayer struct {
 	UserId      int64
@@ -55,4 +58,25 @@ func (self *ModPlayer) SetSign(sign string, player *Player) {
 	}
 	player.ModPlayer.Sign = sign
 	fmt.Println()
+}
+func (self *ModPlayer) AddExp(Exp int, player *Player) {
+	self.PlayerExp += Exp
+
+	for {
+		config := csvs.GetNowLevelConfig(self.PlayerLevel)
+		if config == nil {
+			//记录并处理
+			break
+		} else if config.PlayerExp == 0 {
+			return
+		}
+		if config.ChapterId > 0 && player.ModUniqueTask.IsTaskFInish(config.ChapterId) {
+			break
+		}
+		if self.PlayerExp >= config.PlayerExp {
+			self.PlayerLevel++
+			self.PlayerExp -= config.PlayerExp
+		}
+	}
+
 }
